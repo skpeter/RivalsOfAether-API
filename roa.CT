@@ -104,7 +104,7 @@ end
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{$lua}
 -- Edit these variables to your liking
-URL = "http://YOUR_URL_HERE" -- URL where the data gets sent to
+URL = "http://localhost/results" -- URL where the data gets sent to
 PollRate = 2000 --How many time in miliseconds will this script poll for changes
 DiffHandler = "game" -- Set to "game" to only send data to server on match end/start, set to anything else to send for any other changes.
 
@@ -149,42 +149,30 @@ local function copyTable(src)
   return dest
 end
 
--- Converts a table to encoded JSON string
-local function jsonEncode(tbl, indent)
-  if not indent then indent = 0 end
-  local json = ""
-  local spacing = string.rep(" ", indent)
-
-  json = json .. "{\n"
-
-  local isFirst = true
-  for key, value in pairs(tbl) do
-    if not isFirst then
-      json = json .. ",\n"
+local urlencodeTable = function(tbl)
+    local function urlencode(str)
+        if str then
+            str = string.gsub(str, "([^%w])", function(c)
+                return string.format("%%%02X", string.byte(c))
+            end)
+        end
+        return str
     end
-    isFirst = false
-    json = json .. spacing .. "  \"" .. key .. "\": "
 
-    if type(value) == "string" then
-      json = json .. "\"" .. value .. "\""
-    elseif type(value) == "number" or type(value) == "boolean" then
-      json = json .. tostring(value)
-    elseif type(value) == "table" then
-      json = json .. jsonEncode(value, indent + 2)
-    else
-      json = json .. "null"
+    local encoded_parts = {}
+    for k, v in pairs(tbl) do
+        local key = urlencode(tostring(k))
+        local value = urlencode(tostring(v))
+        table.insert(encoded_parts, key .. "=" .. value)
     end
-  end
-
-  json = json .. "\n" .. spacing .. "}"
-  return json
+    return table.concat(encoded_parts, "&amp;")
 end
 
 -- Function to send data to your HTTP server
 local sendToServer = function(data)
   local internet = getInternet()
+  internet.Header = "application/json"
   local result = internet.postURL(URL, data)
-  if result then print("Response: " .. result) end
   PreviousAddresses = copyTable(MemoryAddresses)
 end
 
@@ -205,12 +193,12 @@ local function onTimerTick()
   getValues()
   if (DiffHandler == "game") then
     if (MemoryAddresses["IsNotInMatch"] ~= PreviousAddresses["IsNotInMatch"]) then
-      sendToServer(jsonEncode(MemoryAddresses))
+      sendToServer(urlencodeTable(MemoryAddresses))
     end
   else
     for index, value in pairs(MemoryAddresses) do
       if value ~= PreviousAddresses[index] then
-        sendToServer(jsonEncode(MemoryAddresses))
+        sendToServer(MemoryAddresses)
         break
       end
     end
