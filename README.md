@@ -53,3 +53,6 @@ This is the data that will be exported through the URI-encoded form to the addre
 - Pomme: 18
 - Olympia: 19
 Workshop characters may show up as values above 20, but these cannot be fully determined as of this writing.
+
+## Help this project
+This cheat table was written in a very rudimentary way as GameMaker is really good with hiding values inside memory, also I'm not really good with CE (this is my first project and I've developed it in about 2 weeks for a very specific need). If someone is able to rewrite the memory address obtaining part, preferrably using a way that fetches the values from static pointers instead, it would be very appreciated.
