@@ -70,6 +70,28 @@ debug_setBreakpoint("RivalsofAether.exe+1C58714",function()
   end
 end)
 
+-- Find the standing addresses
+-- print("Finding standing addresses")
+foundPercentagelist = {}
+debug_setBreakpoint("RivalsofAether.exe+41A451D",function()
+  -- print(string.format("%X",EAX))
+  if not foundPercentagelist[ECH] then
+    local index = string.sub(string.format("%X",ECX), -2, -2)
+    local name = "P"..index.."Standing"
+    local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
+    local memaddr = getAddressList().createMemoryRecord()
+    memaddr.Description = name
+    memaddr.Address = ECX
+    memaddr.VarType = vtDouble
+    memaddr.appendToEntry(valuesMemaddr)
+    foundPercentagelist[EAX]=true
+    if tableLength(foundPercentagelist) == 4 then
+      -- print("All percentage addresses found")
+      debug_removeBreakpoint("RivalsofAether.exe+1C58714")
+    end
+  end
+end)
+
 -- Find the "is in match" address
 -- print("Finding 'is in match' address")
 debug_setBreakpoint("RivalsofAether.exe+440103D",function()
@@ -90,6 +112,7 @@ end)
 debug_removeBreakpoint("RivalsofAether.exe+1C58714")
 debug_removeBreakpoint("RivalsofAether.exe+41AAB6B")
 debug_removeBreakpoint("RivalsofAether.exe+440103D")
+debug_removeBreakpoint("RivalsofAether.exe+41A451D")
 local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
 if valuesMemaddr ~= nil and valuesMemaddr.Count &gt; 0 then
   while valuesMemaddr.Count &gt; 0 do
@@ -472,6 +495,30 @@ end
         <Byte>2F</Byte>
         <Byte>05</Byte>
         <Byte>B8</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>DetermineWinner :movsd xmm0,[ecx]</Description>
+      <AddressString>RivalsofAether.exe+41A451D</AddressString>
+      <Before>
+        <Byte>10</Byte>
+        <Byte>39</Byte>
+        <Byte>C1</Byte>
+        <Byte>74</Byte>
+        <Byte>52</Byte>
+      </Before>
+      <Actual>
+        <Byte>F2</Byte>
+        <Byte>0F</Byte>
+        <Byte>10</Byte>
+        <Byte>01</Byte>
+      </Actual>
+      <After>
+        <Byte>F2</Byte>
+        <Byte>0F</Byte>
+        <Byte>10</Byte>
+        <Byte>49</Byte>
+        <Byte>08</Byte>
       </After>
     </CodeEntry>
   </CheatCodes>
