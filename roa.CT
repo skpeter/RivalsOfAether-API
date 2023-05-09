@@ -56,13 +56,15 @@ debug_setBreakpoint("RivalsofAether.exe+1C58714",function()
   if not foundPercentagelist[EAX] then
     local index = string.sub(string.format("%X",EAX), -2, -2)
     local name = "P"..index.."Percentage"
-    local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
-    local memaddr = getAddressList().createMemoryRecord()
-    memaddr.Description = name
-    memaddr.Address = EAX
-    memaddr.VarType = vtDouble
-    memaddr.appendToEntry(valuesMemaddr)
-    foundPercentagelist[EAX]=true
+    if hasValue({'1', '2', '3', '4'}, index) then
+      local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
+      local memaddr = getAddressList().createMemoryRecord()
+      memaddr.Description = name
+      memaddr.Address = EAX
+      memaddr.VarType = vtDouble
+      memaddr.appendToEntry(valuesMemaddr)
+      foundPercentagelist[EAX]=true
+    end
     if tableLength(foundPercentagelist) == 4 then
       -- print("All percentage addresses found")
       debug_removeBreakpoint("RivalsofAether.exe+1C58714")
@@ -75,19 +77,45 @@ end)
 foundPercentagelist = {}
 debug_setBreakpoint("RivalsofAether.exe+41A451D",function()
   -- print(string.format("%X",EAX))
+  if not foundPercentagelist[ECX] then
+    local index = string.sub(string.format("%X",ECX), -2, -2)
+    local name = "P"..index.."Standing"
+    if hasValue({'1', '2', '3', '4'}, index) then
+      local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
+      local memaddr = getAddressList().createMemoryRecord()
+      memaddr.Description = name
+      memaddr.Address = ECX
+      memaddr.VarType = vtDouble
+      memaddr.appendToEntry(valuesMemaddr)
+      foundPercentagelist[ECX]=true
+    end
+    if tableLength(foundPercentagelist) == 4 then
+      -- print("All percentage addresses found")
+      debug_removeBreakpoint("RivalsofAether.exe+41A451D")
+    end
+  end
+end)
+
+-- Find the character ID addresses
+-- print("Finding character addresses")
+foundPercentagelist = {}
+debug_setBreakpoint("RivalsofAether.exe+67B7E7",function()
+  -- print(string.format("%X",EAX))
   if not foundPercentagelist[ECH] then
     local index = string.sub(string.format("%X",ECX), -2, -2)
     local name = "P"..index.."Standing"
-    local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
-    local memaddr = getAddressList().createMemoryRecord()
-    memaddr.Description = name
-    memaddr.Address = ECX
-    memaddr.VarType = vtDouble
-    memaddr.appendToEntry(valuesMemaddr)
-    foundPercentagelist[EAX]=true
+    if hasValue({'1', '2', '3', '4'}, index) then
+      local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
+      local memaddr = getAddressList().createMemoryRecord()
+      memaddr.Description = name
+      memaddr.Address = ECX
+      memaddr.VarType = vtDouble
+      memaddr.appendToEntry(valuesMemaddr)
+      foundPercentagelist[EAX]=true
+    end
     if tableLength(foundPercentagelist) == 4 then
       -- print("All percentage addresses found")
-      debug_removeBreakpoint("RivalsofAether.exe+1C58714")
+      debug_removeBreakpoint("RivalsofAether.exe+67B7E7")
     end
   end
 end)
@@ -113,12 +141,13 @@ debug_removeBreakpoint("RivalsofAether.exe+1C58714")
 debug_removeBreakpoint("RivalsofAether.exe+41AAB6B")
 debug_removeBreakpoint("RivalsofAether.exe+440103D")
 debug_removeBreakpoint("RivalsofAether.exe+41A451D")
-local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
-if valuesMemaddr ~= nil and valuesMemaddr.Count &gt; 0 then
-  while valuesMemaddr.Count &gt; 0 do
-    valuesMemaddr.Child[0]:Delete()
-  end
-end
+debug_removeBreakpoint("RivalsofAether.exe+67B7E7")
+--local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
+--if valuesMemaddr ~= nil and valuesMemaddr.Count &gt; 0 then
+  --while valuesMemaddr.Count &gt; 0 do
+    --valuesMemaddr.Child[0]:Delete()
+  --end
+--end
 </AssemblerScript>
     </CheatEntry>
     <CheatEntry>
@@ -136,24 +165,40 @@ MemoryAddresses = {
   IsNotInMatch = 1,
   P1StocksLost = 0,
   P1Percentage = 0,
+  P1Standing = 0,
+  P1Character = 0,
   P2StocksLost = 0,
   P2Percentage = 0,
+  P2Standing = 0,
+  P2Character = 0,
   P3StocksLost = 0,
   P3Percentage = 0,
+  P3Standing = 0,
+  P3Character = 0,
   P4StocksLost = 0,
-  P4Percentage = 0
+  P4Percentage = 0,
+  P4Standing = 0,
+  P4Character = 0
 }
 -- Addresses from previous poll. Used to determine if changes were made.
-PreviousAddresses = {
+MemoryAddresses = {
   IsNotInMatch = 1,
   P1StocksLost = 0,
   P1Percentage = 0,
+  P1Standing = 0,
+  P1Character = 0,
   P2StocksLost = 0,
   P2Percentage = 0,
+  P2Standing = 0,
+  P2Character = 0,
   P3StocksLost = 0,
   P3Percentage = 0,
+  P3Standing = 0,
+  P3Character = 0,
   P4StocksLost = 0,
-  P4Percentage = 0
+  P4Percentage = 0,
+  P4Standing = 0,
+  P4Character = 0
 }
 
 if syntaxcheck then return end
@@ -518,6 +563,30 @@ end
         <Byte>0F</Byte>
         <Byte>10</Byte>
         <Byte>49</Byte>
+        <Byte>08</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>CharacterDeterminator :movsd xmm0,[eax]</Description>
+      <AddressString>RivalsofAether.exe+67B7E7</AddressString>
+      <Before>
+        <Byte>84</Byte>
+        <Byte>B3</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>F2</Byte>
+        <Byte>0F</Byte>
+        <Byte>10</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>7E</Byte>
+        <Byte>48</Byte>
         <Byte>08</Byte>
       </After>
     </CodeEntry>
