@@ -13,6 +13,10 @@ Every number of seconds (configurable in the script), the script checks for chan
 You are also able to configure which scope of changes should trigger a request (currently only in-game flag is supported as a trigger).
 Please note that it's not part of the scope of this project to export this data to whichever software you use. You must write your own middleware that receives requests sent from the CheatEngine client and applies the data to your software accordingly. Either that or you must ask the maintainer of the software you work with to develop the implementation for you.
 
+## Disclaimer
+This project has been developed with the sole purpose of scraping data from offline matches. These addresses may not point to actual data in the game, so making any changes to these values may cause unintended behavior.
+**This project has not been tested online, and it is currently unknown if it is safe to use in online matches.**
+
 ## Setup
 First the cheat table must be able to find the addresses related to the game data. This must be done every time the game launches, as the addresses can change.
 - Make sure the game is running
