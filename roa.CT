@@ -122,7 +122,7 @@ end)
 
 -- Find the "is not in match" address
 -- print("Finding 'is not in match' address")
-debug_setBreakpoint("RivalsofAether.exe+440E010",function()
+debug_setBreakpoint("RivalsofAether.exe+93FC98",function()
   -- print(string.format("%X",EAX))
   local name = "IsNotInMatch"
   local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
@@ -132,7 +132,7 @@ debug_setBreakpoint("RivalsofAether.exe+440E010",function()
   memaddr.VarType = vtDouble
   memaddr.appendToEntry(valuesMemaddr)
   -- print("'Is in match' address found")
-  debug_removeBreakpoint("RivalsofAether.exe+440E010")
+  debug_removeBreakpoint("RivalsofAether.exe+93FC98")
 end)
 
 [DISABLE]
@@ -141,7 +141,7 @@ debug_removeBreakpoint("RivalsofAether.exe+3BCA42F ")
 debug_removeBreakpoint("RivalsofAether.exe+1FE8D50")
 debug_removeBreakpoint("RivalsofAether.exe+3BCA239")
 debug_removeBreakpoint("RivalsofAether.exe+67F057")
-debug_removeBreakpoint("RivalsofAether.exe+440E010")
+debug_removeBreakpoint("RivalsofAether.exe+93FC98")
 --local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
 --if valuesMemaddr ~= nil and valuesMemaddr.Count &gt; 0 then
   --while valuesMemaddr.Count &gt; 0 do
