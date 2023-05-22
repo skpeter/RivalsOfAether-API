@@ -158,7 +158,7 @@ debug_removeBreakpoint("RivalsofAether.exe+67F057")
 -- Edit these variables to your liking
 URL = "http://localhost/results" -- URL where the data gets sent to
 PollRate = 2000 --How many time in miliseconds will this script poll for changes
-DiffHandler = "game" -- Set to "game" to only send data to server on match end/start, set to anything else to send for any other changes.
+DiffHandler = "standing" -- Set to "standing" to only send data to server when standings are set, set to anything else to send for any other changes.
 
 -- Rivals of Aether memory addresses
 MemoryAddresses = {
@@ -257,8 +257,8 @@ end
 -- Main loop
 local function onTimerTick()
   getValues()
-  if (DiffHandler == "game") then
-    if (MemoryAddresses["IsInMatch"] ~= PreviousAddresses["IsInMatch"]) then
+  if (DiffHandler == "standing") then
+    if (MemoryAddresses["P1Standing"] ~= PreviousAddresses["P1Standing"] or MemoryAddresses["P2Standing"] ~= PreviousAddresses["P2Standing"] or MemoryAddresses["P3Standing"] ~= PreviousAddresses["P3Standing"] or MemoryAddresses["P4Standing"] ~= PreviousAddresses["P4Standing"]) then
       sendToServer(urlencodeTable(MemoryAddresses))
     end
   else
