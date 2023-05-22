@@ -34,7 +34,6 @@ This is the data that will be exported through the URI-encoded form to the addre
 - P1Percentage, P2Percentage, P3Percentage, P4Percentage: Player Percentage (number)
 - P1Character, P1Character, P1Character, P1Character: Player character in IDs
 - P1Standing, P2Standing, P3Standing, P4Standing: Player standing, from 1 (1st) to 4 (4th), should be the same for doubles matches
-- IsNotInMatch: 1 if it's not in a match, 0 if it is
 
 ### Character IDs
 - Random: 1

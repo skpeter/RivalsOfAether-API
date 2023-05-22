@@ -26,7 +26,7 @@ end
 -- Find the KO counter addresses
 -- print("Finding KO Addresses")
 foundKOlist = {}
-debug_setBreakpoint("RivalsofAether.exe+3BCA42F ",function()
+debug_setBreakpoint("RivalsofAether.exe+3BCA42F",function()
   -- print(string.format("%X",EAX))
   if not foundKOlist[EAX] then
     local index = string.sub(string.format("%X",EAX), -2, -2)
@@ -43,7 +43,7 @@ debug_setBreakpoint("RivalsofAether.exe+3BCA42F ",function()
     end
     if tableLength(foundKOlist) == 4 then
       -- print("All KO addresses found")
-      debug_removeBreakpoint("RivalsofAether.exe+3BCA42F ")
+      debug_removeBreakpoint("RivalsofAether.exe+3BCA42F")
     end
   end
 end)
@@ -122,22 +122,22 @@ end)
 
 -- Find the "is not in match" address
 -- print("Finding 'is not in match' address")
-debug_setBreakpoint("RivalsofAether.exe+93FC98",function()
+-- debug_setBreakpoint("RivalsofAether.exe+93FC98",function()
   -- print(string.format("%X",EAX))
-  local name = "IsNotInMatch"
-  local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
-  local memaddr = getAddressList().createMemoryRecord()
-  memaddr.Description = name
-  memaddr.Address = EAX
-  memaddr.VarType = vtDouble
-  memaddr.appendToEntry(valuesMemaddr)
+  -- local name = "IsInMatch"
+  -- local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
+  -- local memaddr = getAddressList().createMemoryRecord()
+  -- memaddr.Description = name
+  -- memaddr.Address = EAX
+  -- memaddr.VarType = vtDouble
+  -- memaddr.appendToEntry(valuesMemaddr)
   -- print("'Is in match' address found")
-  debug_removeBreakpoint("RivalsofAether.exe+93FC98")
-end)
+  --debug_removeBreakpoint("RivalsofAether.exe+93FC98")
+-- end)
 
 [DISABLE]
 -- print("Disabling breakpoints")
-debug_removeBreakpoint("RivalsofAether.exe+3BCA42F ")
+debug_removeBreakpoint("RivalsofAether.exe+3BCA42F")
 debug_removeBreakpoint("RivalsofAether.exe+1FE8D50")
 debug_removeBreakpoint("RivalsofAether.exe+3BCA239")
 debug_removeBreakpoint("RivalsofAether.exe+67F057")
@@ -162,7 +162,6 @@ DiffHandler = "game" -- Set to "game" to only send data to server on match end/s
 
 -- Rivals of Aether memory addresses
 MemoryAddresses = {
-  IsNotInMatch = 1,
   P1StocksLost = 0,
   P1Percentage = 0,
   P1Standing = 0,
@@ -182,7 +181,6 @@ MemoryAddresses = {
 }
 -- Addresses from previous poll. Used to determine if changes were made.
 PreviousAddresses = {
-  IsNotInMatch = 1,
   P1StocksLost = 0,
   P1Percentage = 0,
   P1Standing = 0,
@@ -260,7 +258,7 @@ end
 local function onTimerTick()
   getValues()
   if (DiffHandler == "game") then
-    if (MemoryAddresses["IsNotInMatch"] ~= PreviousAddresses["IsNotInMatch"]) then
+    if (MemoryAddresses["IsInMatch"] ~= PreviousAddresses["IsInMatch"]) then
       sendToServer(urlencodeTable(MemoryAddresses))
     end
   else
