@@ -141,7 +141,7 @@ debug_removeBreakpoint("RivalsofAether.exe+3BCA42F")
 debug_removeBreakpoint("RivalsofAether.exe+1FE8D50")
 debug_removeBreakpoint("RivalsofAether.exe+3BCA239")
 debug_removeBreakpoint("RivalsofAether.exe+67F057")
-debug_removeBreakpoint("RivalsofAether.exe+93FC98")
+--debug_removeBreakpoint("RivalsofAether.exe+93FC98")
 --local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
 --if valuesMemaddr ~= nil and valuesMemaddr.Count &gt; 0 then
   --while valuesMemaddr.Count &gt; 0 do
