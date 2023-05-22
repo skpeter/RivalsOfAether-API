@@ -181,7 +181,7 @@ MemoryAddresses = {
   P4Character = 0
 }
 -- Addresses from previous poll. Used to determine if changes were made.
-MemoryAddresses = {
+PreviousAddresses = {
   IsNotInMatch = 1,
   P1StocksLost = 0,
   P1Percentage = 0,
