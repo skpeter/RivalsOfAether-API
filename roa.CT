@@ -21,12 +21,18 @@ local function hasValue (table, val)
   return false
 end
 
+KOAddr = "RivalsofAether.exe+3BCAB0F"
+PercentageAddr = "RivalsofAether.exe+1FE8EB0"
+StandingsAddr = "RivalsofAether.exe+3BCA919"
+CharactersAddr = "RivalsofAether.exe+3EE042B"
+
 [ENABLE]
 
 -- Find the KO counter addresses
+-- ref: mov [eax],00000000 - mov [esi+24],0000011C - test [esi+44],00FFFFFF
 -- print("Finding KO Addresses")
 foundKOlist = {}
-debug_setBreakpoint("RivalsofAether.exe+3BCA42F",function()
+debug_setBreakpoint(KOAddr,function()
   -- print(string.format("%X",EAX))
   if not foundKOlist[EAX] then
     local index = string.sub(string.format("%X",EAX), -2, -2)
@@ -43,15 +49,16 @@ debug_setBreakpoint("RivalsofAether.exe+3BCA42F",function()
     end
     if tableLength(foundKOlist) == 4 then
       -- print("All KO addresses found")
-      debug_removeBreakpoint("RivalsofAether.exe+3BCA42F")
+      debug_removeBreakpoint(KOAddr)
     end
   end
 end)
 
 -- Find the percentage addresses
+-- ref: movsd xmm0,[eax] - movsd xmm1,[eax+08] - mov ecx,00FFFFFF
 -- print("Finding percentage addresses")
 foundPercentagelist = {}
-debug_setBreakpoint("RivalsofAether.exe+1FE8D50",function()
+debug_setBreakpoint(PercentageAddr,function()
   -- print(string.format("%X",EAX))
   if not foundPercentagelist[EAX] then
     local index = string.sub(string.format("%X",EAX), -2, -2)
@@ -67,17 +74,18 @@ debug_setBreakpoint("RivalsofAether.exe+1FE8D50",function()
     end
     if tableLength(foundPercentagelist) == 4 then
       -- print("All percentage addresses found")
-      debug_removeBreakpoint("RivalsofAether.exe+1FE8D50")
+      debug_removeBreakpoint(PercentageAddr)
     end
   end
 end)
 
 -- Find the standing addresses
+-- ref: mov [eax],00000000 - mov [esi+24],00000118 - test [esi+44],00FFFFFF
 -- print("Finding standing addresses")
-foundPercentagelist = {}
-debug_setBreakpoint("RivalsofAether.exe+3BCA239",function()
+foundStandinglist = {}
+debug_setBreakpoint(StandingsAddr,function()
   -- print(string.format("%X",EAX))
-  if not foundPercentagelist[EAX] then
+  if not foundStandinglist[EAX] then
     local index = string.sub(string.format("%X",EAX), -2, -2)
     local name = "P"..index.."Standing"
     if hasValue({'1', '2', '3', '4'}, index) then
@@ -87,21 +95,22 @@ debug_setBreakpoint("RivalsofAether.exe+3BCA239",function()
       memaddr.Address = EAX
       memaddr.VarType = vtDouble
       memaddr.appendToEntry(valuesMemaddr)
-      foundPercentagelist[EAX]=true
+      foundStandinglist[EAX]=true
     end
-    if tableLength(foundPercentagelist) == 4 then
-      -- print("All percentage addresses found")
-      debug_removeBreakpoint("RivalsofAether.exe+3BCA239")
+    if tableLength(foundStandinglist) == 4 then
+      -- print("All standing addresses found")
+      debug_removeBreakpoint(StandingsAddr)
     end
   end
 end)
 
 -- Find the character ID addresses
+-- ref: movsd xmm0,[eax] - movsd xmm1,[eax+08] - mov eax,00FFFFFF
 -- print("Finding character addresses")
-foundPercentagelist = {}
-debug_setBreakpoint("RivalsofAether.exe+67F057",function()
+foundCharacterIDlist = {}
+debug_setBreakpoint(CharactersAddr,function()
   -- print(string.format("%X",EAX))
-  if not foundPercentagelist[EAX] then
+  if not foundCharacterIDlist[EAX] then
     local index = string.sub(string.format("%X",EAX), -2, -2)
     local name = "P"..index.."Character"
     if hasValue({'1', '2', '3', '4'}, index) then
@@ -111,11 +120,11 @@ debug_setBreakpoint("RivalsofAether.exe+67F057",function()
       memaddr.Address = EAX
       memaddr.VarType = vtDouble
       memaddr.appendToEntry(valuesMemaddr)
-      foundPercentagelist[EAX]=true
+      foundCharacterIDlist[EAX]=true
     end
-    if tableLength(foundPercentagelist) == 4 then
-      -- print("All percentage addresses found")
-      debug_removeBreakpoint("RivalsofAether.exe+67F057")
+    if tableLength(foundCharacterIDlist) == 4 then
+      -- print("All characters found")
+      debug_removeBreakpoint(CharactersAddr)
     end
   end
 end)
@@ -137,10 +146,10 @@ end)
 
 [DISABLE]
 -- print("Disabling breakpoints")
-debug_removeBreakpoint("RivalsofAether.exe+3BCA42F")
-debug_removeBreakpoint("RivalsofAether.exe+1FE8D50")
-debug_removeBreakpoint("RivalsofAether.exe+3BCA239")
-debug_removeBreakpoint("RivalsofAether.exe+67F057")
+debug_removeBreakpoint(KOAddr)
+debug_removeBreakpoint(PercentageAddr)
+debug_removeBreakpoint(StandingsAddr)
+debug_removeBreakpoint(CharactersAddr)
 --debug_removeBreakpoint("RivalsofAether.exe+93FC98")
 --local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
 --if valuesMemaddr ~= nil and valuesMemaddr.Count &gt; 0 then
