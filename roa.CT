@@ -158,6 +158,17 @@ if valuesMemaddr ~= nil and valuesMemaddr.Count &gt; 0 then
   end
 end
 </AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>17</Key>
+            <Key>188</Key>
+          </Keys>
+          <Description>Enable Everything</Description>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
     </CheatEntry>
     <CheatEntry>
       <ID>6</ID>
@@ -310,6 +321,17 @@ if t then
 end
 
 </AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>17</Key>
+            <Key>188</Key>
+          </Keys>
+          <Description>Enable Everything</Description>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
     </CheatEntry>
     <CheatEntry>
       <ID>5</ID>
