@@ -209,6 +209,10 @@ PreviousAddresses = {
   P4Character = 0
 }
 
+-- Force lua engine to not show when there are errors
+getLuaEngine().cbShowOnPrint.Checked=false
+getLuaEngine().hide()
+
 if syntaxcheck then return end
 if not scriptTimers then scriptTimers = {} end
 
