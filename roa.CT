@@ -176,7 +176,7 @@ end
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{$lua}
 -- Edit these variables to your liking
-URL = "https://webhook.site/673e75ea-7c76-42c9-904b-9a6a4a26e7aa" -- URL where the data gets sent to
+URL = "http://localhost/results" -- URL where the data gets sent to
 AccessToken = "xxxx"
 PollRate = 2000 -- How much time in miliseconds will this script poll for changes
 DiffHandler = "standing" -- Set to "standing" to only send data to server when standings are set, set to anything else to send for any other changes.
