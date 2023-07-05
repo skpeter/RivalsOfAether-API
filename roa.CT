@@ -176,13 +176,14 @@ end
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{$lua}
 -- Edit these variables to your liking
-URL = "http://localhost/results" -- URL where the data gets sent to
+URL = "https://webhook.site/673e75ea-7c76-42c9-904b-9a6a4a26e7aa" -- URL where the data gets sent to
 AccessToken = "xxxx"
 PollRate = 2000 -- How much time in miliseconds will this script poll for changes
 DiffHandler = "standing" -- Set to "standing" to only send data to server when standings are set, set to anything else to send for any other changes.
 
 -- Rivals of Aether memory addresses
 MemoryAddresses = {
+  access_token = AccessToken,
   P1StocksLost = 0,
   P1Percentage = 0,
   P1Standing = 0,
@@ -202,6 +203,7 @@ MemoryAddresses = {
 }
 -- Addresses from previous poll. Used to determine if changes were made.
 PreviousAddresses = {
+  access_token = AccessToken,
   P1StocksLost = 0,
   P1Percentage = 0,
   P1Standing = 0,
@@ -261,9 +263,6 @@ end
 
 -- Function to send data to your HTTP server
 local sendToServer = function(data)
-  if AccessToken then
-    data.access_token = AccessToken
-  end
   data = urlencodeTable(data)
   local internet = getInternet()
   local result = internet.postURL(URL, data)
