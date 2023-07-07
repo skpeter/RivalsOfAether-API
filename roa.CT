@@ -25,6 +25,7 @@ KOAddr = "RivalsofAether.exe+3BCAB0F"
 PercentageAddr = "RivalsofAether.exe+1FE8EB0"
 StandingsAddr = "RivalsofAether.exe+3BCA919"
 CharactersAddr = "RivalsofAether.exe+3EE042B"
+IsInMatchAddr = "RivalsofAether.exe+93FC98"
 
 [ENABLE]
 
@@ -130,19 +131,20 @@ debug_setBreakpoint(CharactersAddr,function()
 end)
 
 -- Find the "is not in match" address
+-- ref: mov [eax],00000000 - mov eax,[ebp-2C] - mov [06A66020],eax
 -- print("Finding 'is not in match' address")
--- debug_setBreakpoint("RivalsofAether.exe+93FC98",function()
-  -- print(string.format("%X",EAX))
-  -- local name = "IsInMatch"
-  -- local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
-  -- local memaddr = getAddressList().createMemoryRecord()
-  -- memaddr.Description = name
-  -- memaddr.Address = EAX
-  -- memaddr.VarType = vtDouble
-  -- memaddr.appendToEntry(valuesMemaddr)
-  -- print("'Is in match' address found")
-  --debug_removeBreakpoint("RivalsofAether.exe+93FC98")
--- end)
+debug_setBreakpoint(IsInMatchAddr,function()
+  print(string.format("%X",EAX))
+  local name = "IsInMatch"
+  local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
+  local memaddr = getAddressList().createMemoryRecord()
+  memaddr.Description = name
+  memaddr.Address = EAX
+  memaddr.VarType = vtDouble
+  memaddr.appendToEntry(valuesMemaddr)
+  print("'Is in match' address found")
+  debug_removeBreakpoint(IsInMatchAddr)
+end)
 
 [DISABLE]
 -- print("Disabling breakpoints")
@@ -150,7 +152,7 @@ debug_removeBreakpoint(KOAddr)
 debug_removeBreakpoint(PercentageAddr)
 debug_removeBreakpoint(StandingsAddr)
 debug_removeBreakpoint(CharactersAddr)
---debug_removeBreakpoint("RivalsofAether.exe+93FC98")
+debug_removeBreakpoint(IsInMatchAddr)
 local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
 if valuesMemaddr ~= nil and valuesMemaddr.Count &gt; 0 then
   while valuesMemaddr.Count &gt; 0 do
@@ -178,48 +180,52 @@ end
 -- Edit these variables to your liking
 URL = "http://localhost/results" -- URL where the data gets sent to
 AccessToken = "xxxx"
-PollRate = 2000 -- How much time in miliseconds will this script poll for changes
+local poll_rate = 500 -- How much time in miliseconds will this script poll for changes
 DiffHandler = {'standing', 'character'} -- Set to "standing" to only send data to server when standings are set, "character" for when characters change, etc. Leave as a blank table "{}" to catch any change.
+
+GameSpeed = 1 -- Set this to another value you'd like to have during matches. This is for AetherBet, use at your own risk!
 
 -- Rivals of Aether memory addresses
 MemoryAddresses = {
   access_token = AccessToken,
-  P1StocksLost = 0,
-  P1Percentage = 0,
-  P1Standing = 0,
-  P1Character = 0,
-  P2StocksLost = 0,
-  P2Percentage = 0,
-  P2Standing = 0,
-  P2Character = 0,
-  P3StocksLost = 0,
-  P3Percentage = 0,
-  P3Standing = 0,
-  P3Character = 0,
-  P4StocksLost = 0,
-  P4Percentage = 0,
-  P4Standing = 0,
-  P4Character = 0
+  P1StocksLost = nil,
+  P1Percentage = nil,
+  P1Standing = nil,
+  P1Character = nil,
+  P2StocksLost = nil,
+  P2Percentage = nil,
+  P2Standing = nil,
+  P2Character = nil,
+  P3StocksLost = nil,
+  P3Percentage = nil,
+  P3Standing = nil,
+  P3Character = nil,
+  P4StocksLost = nil,
+  P4Percentage = nil,
+  P4Standing = nil,
+  P4Character = nil,
+  IsInMatch = nil
 }
 -- Addresses from previous poll. Used to determine if changes were made.
 PreviousAddresses = {
   access_token = AccessToken,
-  P1StocksLost = 0,
-  P1Percentage = 0,
-  P1Standing = 0,
-  P1Character = 0,
-  P2StocksLost = 0,
-  P2Percentage = 0,
-  P2Standing = 0,
-  P2Character = 0,
-  P3StocksLost = 0,
-  P3Percentage = 0,
-  P3Standing = 0,
-  P3Character = 0,
-  P4StocksLost = 0,
-  P4Percentage = 0,
-  P4Standing = 0,
-  P4Character = 0
+  P1StocksLost = nil,
+  P1Percentage = nil,
+  P1Standing = nil,
+  P1Character = nil,
+  P2StocksLost = nil,
+  P2Percentage = nil,
+  P2Standing = nil,
+  P2Character = nil,
+  P3StocksLost = nil,
+  P3Percentage = nil,
+  P3Standing = nil,
+  P3Character = nil,
+  P4StocksLost = nil,
+  P4Percentage = nil,
+  P4Standing = nil,
+  P4Character = nil,
+  IsInMatch = nil
 }
 
 -- Force lua engine to not show when there are errors
@@ -313,6 +319,11 @@ local function onTimerTick()
       end
     end
   end
+  if MemoryAddresses['IsInMatch'] == 1 then
+    speedhack_setSpeed(GameSpeed)
+  else
+    speedhack_setSpeed(1)
+  end
 end
 
 
@@ -326,7 +337,7 @@ if t then
 else
   scriptTimers[id] = createTimer()
   t = scriptTimers[id]
-  t.Interval = PollRate
+  t.Interval = poll_rate
   t.OnTimer = onTimerTick
 end
 
