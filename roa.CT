@@ -301,28 +301,30 @@ end
 -- Main loop
 local function onTimerTick()
   getValues()
+  if MemoryAddresses['IsInMatch'] == 1 then
+    speedhack_setSpeed(GameSpeed)
+  else
+    speedhack_setSpeed(1)
+  end
   if has_value(DiffHandler, "standing") then
     if (MemoryAddresses["P1Standing"] ~= PreviousAddresses["P1Standing"] or MemoryAddresses["P2Standing"] ~= PreviousAddresses["P2Standing"] or MemoryAddresses["P3Standing"] ~= PreviousAddresses["P3Standing"] or MemoryAddresses["P4Standing"] ~= PreviousAddresses["P4Standing"]) then
       sendToServer(MemoryAddresses)
+      return nil
     end
   end
   if has_value(DiffHandler, "character") then
     if (MemoryAddresses["P1Character"] ~= PreviousAddresses["P1Character"] or MemoryAddresses["P2Character"] ~= PreviousAddresses["P2Character"] or MemoryAddresses["P3Character"] ~= PreviousAddresses["P3Character"] or MemoryAddresses["P4Character"] ~= PreviousAddresses["P4Character"]) then
       sendToServer(MemoryAddresses)
+      return nil
     end
   end
   if next(DiffHandler) == nil then -- this means table is empty
     for index, value in pairs(MemoryAddresses) do
       if value ~= PreviousAddresses[index] then
         sendToServer(MemoryAddresses)
-        break
+        return nil
       end
     end
-  end
-  if MemoryAddresses['IsInMatch'] == 1 then
-    speedhack_setSpeed(GameSpeed)
-  else
-    speedhack_setSpeed(1)
   end
 end
 
