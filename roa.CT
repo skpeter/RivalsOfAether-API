@@ -180,7 +180,7 @@ end
 -- Edit these variables to your liking
 URL = "http://localhost/results" -- URL where the data gets sent to
 AccessToken = "xxxx"
-local poll_rate = 500 -- How much time in miliseconds will this script poll for changes
+local poll_rate = 1000 -- How much time in miliseconds will this script poll for changes
 DiffHandler = {'standing', 'character'} -- Set to "standing" to only send data to server when standings are set, "character" for when characters change, etc. Leave as a blank table "{}" to catch any change.
 
 GameSpeed = 1 -- Set this to another value you'd like to have during matches. This is for AetherBet, use at your own risk!
