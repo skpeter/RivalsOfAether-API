@@ -25,7 +25,7 @@ KOAddr = "RivalsofAether.exe+3BF80FF"
 PercentageAddr = "RivalsofAether.exe+3BF7FFF"
 StandingsAddr = "RivalsofAether.exe+3BF7F09"
 CharactersAddr = "RivalsofAether.exe+1D74DD1"
-IsInMatchAddr = "RivalsofAether.exe+A74A18"
+IsInMatchAddr = "RivalsofAether.exe+2D3E1AA "
 
 [ENABLE]
 
