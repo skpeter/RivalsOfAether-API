@@ -21,16 +21,16 @@ local function hasValue (table, val)
   return false
 end
 
-KOAddr = "RivalsofAether.exe+3BF801F"
-PercentageAddr = "RivalsofAether.exe+3BF801F"
-StandingsAddr = "RivalsofAether.exe+3BF7E29"
+KOAddr = "RivalsofAether.exe+3BF80FF"
+PercentageAddr = "RivalsofAether.exe+3BF7FFF"
+StandingsAddr = "RivalsofAether.exe+3BF7F09"
 CharactersAddr = "RivalsofAether.exe+1D74DD1"
-IsInMatchAddr = "RivalsofAether.exe+943308"
+IsInMatchAddr = "RivalsofAether.exe+A74A18"
 
 [ENABLE]
 
 -- Find the KO counter addresses
--- ref: mov [eax],00000000 mov [esi+24],0000011C test [esi+44],00FFFFFF
+-- ref: mov [eax],00000000 mov [esi+24],0000011A test [esi+44],00FFFFFF
 -- print("Finding KO Addresses")
 foundKOlist = {}
 debug_setBreakpoint(KOAddr,function()
