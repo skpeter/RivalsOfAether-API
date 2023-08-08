@@ -291,7 +291,7 @@ local function getValues()
   addressGroup = getAddressList().getMemoryRecordByDescription("Values")
   for i=0, addressGroup.Count do
     local child = addressGroup.Child[i]
-    if (child and child.Value) then
+    if (child and isinstance(child.Value, (float, int)) then
       local value = math.floor(child.Value) -- Read the value from the memory address. Function exists in CE.
       MemoryAddresses[child.Description] = value -- Add the value to the data table
     end
