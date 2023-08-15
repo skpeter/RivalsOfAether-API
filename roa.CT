@@ -25,7 +25,7 @@ KOAddr = "RivalsofAether.exe+3BF80FF"
 PercentageAddr = "RivalsofAether.exe+3BF7FFF"
 StandingsAddr = "RivalsofAether.exe+3BF7F09"
 CharactersAddr = "RivalsofAether.exe+1D74DD1"
-IsInMatchAddr = "RivalsofAether.exe+2D3E1AA "
+IsInMatchAddr = "RivalsofAether.exe+2D3E1AA"
 
 [ENABLE]
 
@@ -130,11 +130,11 @@ debug_setBreakpoint(CharactersAddr,function()
   end
 end)
 
--- Find the "is not in match" address
+-- Find the "is in match" address
 -- ref: mov [eax+0C],00000000 mov [eax+04],3FF00000 !!!!mov [eax],00000000 mov eax,[ebp-2C]
 -- print("Finding 'is not in match' address")
 debug_setBreakpoint(IsInMatchAddr,function()
-  print(string.format("%X",EAX))
+  -- print(string.format("%X",EAX))
   local name = "IsInMatch"
   local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
   local memaddr = getAddressList().createMemoryRecord()
@@ -142,7 +142,7 @@ debug_setBreakpoint(IsInMatchAddr,function()
   memaddr.Address = EAX
   memaddr.VarType = vtDouble
   memaddr.appendToEntry(valuesMemaddr)
-  print("'Is in match' address found")
+  -- print("'Is in match' address found")
   debug_removeBreakpoint(IsInMatchAddr)
 end)
 
@@ -292,8 +292,10 @@ local function getValues()
   for i=0, addressGroup.Count do
     local child = addressGroup.Child[i]
     if (child and child.Value) then
-      local value = math.floor(child.Value) -- Read the value from the memory address. Function exists in CE.
-      MemoryAddresses[child.Description] = value -- Add the value to the data table
+      local status, value = pcall(function() return math.floor(child.Value) end)
+      if status then
+        MemoryAddresses[child.Description] = value -- Add the value to the data table
+      end
     end
   end
 end
