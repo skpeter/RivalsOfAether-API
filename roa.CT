@@ -8,7 +8,7 @@
       <AssemblerScript>{$lua}
 -- Edit these variables to your liking
 URL = "http://localhost/results" -- URL where the data gets sent to
-AccessToken = "xxxx"
+AccessToken = "7iyGqSCGpU7wmewaL8RTWg"
 local poll_rate = 1000 -- How much time in miliseconds will this script poll for changes
 DiffHandler = {'standing', 'character'} -- Set to "standing" to only send data to server when standings are set, "character" for when characters change, etc. Leave as a blank table "{}" to catch any change.
 
@@ -218,7 +218,7 @@ KOAddr = "RivalsofAether.exe+3BFFB9F"
 PercentageAddr = "RivalsofAether.exe+3BFFA9F"
 StandingsAddr = "RivalsofAether.exe+3BFF9A9"
 CharactersAddr = "RivalsofAether.exe+1D7A671"
-IsInMatchAddr = "RivalsofAether.exe+30616D8" -- must find new set of instructions
+IsInMatchAddr = "RivalsofAether.exe+2C0D016"
 
 [ENABLE]
 
