@@ -10,7 +10,7 @@
 URL = "http://localhost/results" -- URL where the data gets sent to
 AccessToken = "xxxx"
 local poll_rate = 1000 -- How much time in miliseconds will this script poll for changes
-DiffHandler = {'standing', 'character'} -- Set to "standing" to only send data to server when standings are set, "character" for when characters change, etc. Leave as a blank table "{}" to catch any change.
+DiffHandler = {'standing', 'character', 'percentage'} -- Set to "standing" to only send data to server when standings are set, "character" for when characters change, etc. Leave as a blank table "{}" to catch any change.
 
 GameSpeed = 1.25 -- Set this to another value you'd like to have during matches. This is for AetherBet, use at your own risk!
 
@@ -145,6 +145,12 @@ local function onTimerTick()
   end
   if has_value(DiffHandler, "character") then
     if (MemoryAddresses["P1Character"] ~= PreviousAddresses["P1Character"] or MemoryAddresses["P2Character"] ~= PreviousAddresses["P2Character"] or MemoryAddresses["P3Character"] ~= PreviousAddresses["P3Character"] or MemoryAddresses["P4Character"] ~= PreviousAddresses["P4Character"]) then
+      sendToServer(MemoryAddresses)
+      return nil
+    end
+  end
+  if has_value(DiffHandler, "percentage") then
+    if (MemoryAddresses["P1Percentage"] ~= PreviousAddresses["P1Percentage"] or MemoryAddresses["P2Percentage"] ~= PreviousAddresses["P2Percentage"] or MemoryAddresses["P3Percentage"] ~= PreviousAddresses["P3Percentage"] or MemoryAddresses["P4Percentage"] ~= PreviousAddresses["P4Percentage"]) then
       sendToServer(MemoryAddresses)
       return nil
     end
