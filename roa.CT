@@ -33,7 +33,7 @@ MemoryAddresses = {
   P4Percentage = nil,
   P4Standing = nil,
   P4Character = nil,
-  IsWorkshopEnabled = nil
+  IsWorkshopEnabled = nil,
   IsInMatch = nil
 }
 -- Addresses from previous poll. Used to determine if changes were made.
@@ -55,7 +55,7 @@ PreviousAddresses = {
   P4Percentage = nil,
   P4Standing = nil,
   P4Character = nil,
-  IsWorkshopEnabled = nil
+  IsWorkshopEnabled = nil,
   IsInMatch = nil
 }
 
