@@ -33,6 +33,7 @@ MemoryAddresses = {
   P4Percentage = nil,
   P4Standing = nil,
   P4Character = nil,
+  IsWorkshopEnabled = nil
   IsInMatch = nil
 }
 -- Addresses from previous poll. Used to determine if changes were made.
@@ -54,6 +55,7 @@ PreviousAddresses = {
   P4Percentage = nil,
   P4Standing = nil,
   P4Character = nil,
+  IsWorkshopEnabled = nil
   IsInMatch = nil
 }
 
@@ -225,6 +227,7 @@ PercentageAddr = "RivalsofAether.exe+3C04D5F"
 StandingsAddr = "RivalsofAether.exe+3C04C69"
 CharactersAddr = "RivalsofAether.exe+1D7E381"
 IsInMatchAddr = "RivalsofAether.exe+2C14A0A"
+WorkshopAddr = "RivalsofAether.exe+3D0C5AC"
 
 [ENABLE]
 
@@ -329,6 +332,22 @@ debug_setBreakpoint(CharactersAddr,function()
   end
 end)
 
+-- Find the workshop setting address
+-- ref: movsd [eax],xmm0 mov [esi+2C],00000009 mov eax,[esi+3C] dec eax
+-- print("Finding workshop setting address")
+debug_setBreakpoint(WorkshopAddr,function()
+  -- print(string.format("%X",EAX))
+  local name = "IsWorkshopEnabled"
+  local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
+  local memaddr = getAddressList().createMemoryRecord()
+  memaddr.Description = name
+  memaddr.Address = EAX
+  memaddr.VarType = vtDouble
+  memaddr.appendToEntry(valuesMemaddr)
+  -- print("Workshop setting address found")
+  debug_removeBreakpoint(WorkshopAddr)
+end)
+
 -- Find the "is in match" address
 -- ref: mov [eax+0C],00000000 mov [eax+04],3FF00000 !!!!mov [eax],00000000 mov eax,[ebp-2C]
 -- print("Finding 'is not in match' address")
@@ -351,6 +370,7 @@ debug_removeBreakpoint(KOAddr)
 debug_removeBreakpoint(PercentageAddr)
 debug_removeBreakpoint(StandingsAddr)
 debug_removeBreakpoint(CharactersAddr)
+debug_removeBreakpoint(WorkshopAddr)
 debug_removeBreakpoint(IsInMatchAddr)
 local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
 if valuesMemaddr ~= nil and valuesMemaddr.Count &gt; 0 then
