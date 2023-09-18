@@ -126,6 +126,8 @@ local function getValues()
       local status, value = pcall(function() return math.floor(child.Value) end)
       if status then
         MemoryAddresses[child.Description] = value -- Add the value to the data table
+      else
+        MemoryAddresses[child.Description] = 'NaN' -- Not a numeric value
       end
     end
   end
