@@ -123,11 +123,9 @@ local function getValues()
   for i=0, addressGroup.Count do
     local child = addressGroup.Child[i]
     if (child and child.Value) then
-      local status, value = pcall(function() return math.floor(child.Value) end)
+      local status, value = pcall(function() return tostring(child.Value) end)
       if status then
         MemoryAddresses[child.Description] = value -- Add the value to the data table
-      else
-        MemoryAddresses[child.Description] = 'NaN' -- Not a numeric value
       end
     end
   end
