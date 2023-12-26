@@ -1,4 +1,4 @@
-# The Unnoficial Rivals of Aether API
+# The Unofficial Rivals of Aether API
 This is a CheatEngine table attached to a series of Lua scripts that can be used to export data related to the game.
 Common uses could be statistic projects and scrapers to update data on a tournament scoreboard.
 
