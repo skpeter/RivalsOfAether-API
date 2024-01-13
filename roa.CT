@@ -225,7 +225,7 @@ end
 KOAddr = "RivalsofAether.exe+3C4D19F"
 PercentageAddr = "RivalsofAether.exe+3D512F3"
 StandingsAddr = "RivalsofAether.exe+3C4CFA9"
-CharactersAddr = "RivalsofAether.exe+1D7E9D9"
+CharactersAddr = "RivalsofAether.exe+3D5C8B1"
 -- IsInMatchAddr = "RivalsofAether.exe+2C14A0A"
 WorkshopAddr = "RivalsofAether.exe+3D5B4EC"
 
