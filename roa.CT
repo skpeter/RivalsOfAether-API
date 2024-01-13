@@ -222,17 +222,16 @@ local function hasValue (table, val)
   return false
 end
 
-KOAddr = "RivalsofAether.exe+3C04E5F"
-PercentageAddr = "RivalsofAether.exe+3C04D5F"
-StandingsAddr = "RivalsofAether.exe+3C04C69"
-CharactersAddr = "RivalsofAether.exe+1D7E381"
-IsInMatchAddr = "RivalsofAether.exe+2C14A0A"
-WorkshopAddr = "RivalsofAether.exe+3D0C5AC"
+KOAddr = "RivalsofAether.exe+3C4D19F"
+PercentageAddr = "RivalsofAether.exe+3D512F3"
+StandingsAddr = "RivalsofAether.exe+3C4CFA9"
+CharactersAddr = "RivalsofAether.exe+1D7E9D9"
+-- IsInMatchAddr = "RivalsofAether.exe+2C14A0A"
+WorkshopAddr = "RivalsofAether.exe+3D5B4EC"
 
 [ENABLE]
 
 -- Find the KO counter addresses
--- ref: mov [eax],00000000 mov [esi+24],0000011C test [esi+44],00FFFFFF
 -- print("Finding KO Addresses")
 foundKOlist = {}
 debug_setBreakpoint(KOAddr,function()
@@ -258,22 +257,21 @@ debug_setBreakpoint(KOAddr,function()
 end)
 
 -- Find the percentage addresses
--- ref: mov [eax],00000000 mov [esi+24],0000011A test [esi+44],00FFFFFF
 -- print("Finding percentage addresses")
 foundPercentagelist = {}
 debug_setBreakpoint(PercentageAddr,function()
-  -- print(string.format("%X",EAX))
-  if not foundPercentagelist[EAX] then
-    local index = string.sub(string.format("%X",EAX), -2, -2)
+  -- print(string.format("%X",ECX))
+  if not foundPercentagelist[ECX] then
+    local index = string.sub(string.format("%X",ECX), -2, -2)
     local name = "P"..index.."Percentage"
     if hasValue({'1', '2', '3', '4'}, index) then
       local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
       local memaddr = getAddressList().createMemoryRecord()
       memaddr.Description = name
-      memaddr.Address = EAX
+      memaddr.Address = ECX
       memaddr.VarType = vtDouble
       memaddr.appendToEntry(valuesMemaddr)
-      foundPercentagelist[EAX]=true
+      foundPercentagelist[ECX]=true
     end
     if tableLength(foundPercentagelist) == 4 then
       -- print("All percentage addresses found")
@@ -283,7 +281,6 @@ debug_setBreakpoint(PercentageAddr,function()
 end)
 
 -- Find the standing addresses
--- ref: mov [eax],00000000 mov [esi+24],00000118 test [esi+44],00FFFFFF
 -- print("Finding standing addresses")
 foundStandinglist = {}
 debug_setBreakpoint(StandingsAddr,function()
@@ -308,7 +305,6 @@ debug_setBreakpoint(StandingsAddr,function()
 end)
 
 -- Find the character ID addresses
--- ref: movsd xmm0,[eax] movsd xmm1,[eax+08] mov eax,00FFFFFF movsd [esi+20],xmm1 movsd [esi+18],xmm0 and eax,[esi+24] cmp eax,02
 -- print("Finding character addresses")
 foundCharacterIDlist = {}
 debug_setBreakpoint(CharactersAddr,function()
@@ -333,7 +329,6 @@ debug_setBreakpoint(CharactersAddr,function()
 end)
 
 -- Find the workshop setting address
--- ref: movsd [eax],xmm0 mov [esi+2C],00000009 mov eax,[esi+3C] dec eax
 -- print("Finding workshop setting address")
 debug_setBreakpoint(WorkshopAddr,function()
   -- print(string.format("%X",EAX))
@@ -349,7 +344,6 @@ debug_setBreakpoint(WorkshopAddr,function()
 end)
 
 -- Find the "is in match" address
--- ref: mov [eax+0C],00000000 mov [eax+04],3FF00000 !!!!mov [eax],00000000 mov eax,[ebp-2C]
 -- print("Finding 'is not in match' address")
 -- debug_setBreakpoint(IsInMatchAddr,function()
 --   -- print(string.format("%X",EAX))
