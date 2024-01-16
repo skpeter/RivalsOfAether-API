@@ -226,7 +226,7 @@ KOAddr = "RivalsofAether.exe+3C4D19F"
 PercentageAddr = "RivalsofAether.exe+3D512F3"
 StandingsAddr = "RivalsofAether.exe+3C4CFA9"
 CharactersAddr = "RivalsofAether.exe+3D5C8B1"
--- IsInMatchAddr = "RivalsofAether.exe+2C14A0A"
+IsInMatchAddr = "RivalsofAether.exe+2C440C6"
 WorkshopAddr = "RivalsofAether.exe+3D5B4EC"
 
 [ENABLE]
@@ -345,18 +345,18 @@ end)
 
 -- Find the "is in match" address
 -- print("Finding 'is not in match' address")
--- debug_setBreakpoint(IsInMatchAddr,function()
---   -- print(string.format("%X",EAX))
---   local name = "IsInMatch"
---   local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
---   local memaddr = getAddressList().createMemoryRecord()
---   memaddr.Description = name
---   memaddr.Address = EAX
---   memaddr.VarType = vtDouble
---   memaddr.appendToEntry(valuesMemaddr)
---   -- print("'Is in match' address found")
---   debug_removeBreakpoint(IsInMatchAddr)
--- end)
+debug_setBreakpoint(IsInMatchAddr,function()
+  -- print(string.format("%X",EAX))
+  local name = "IsInMatch"
+  local valuesMemaddr = getAddressList().getMemoryRecordByDescription("Values")
+  local memaddr = getAddressList().createMemoryRecord()
+  memaddr.Description = name
+  memaddr.Address = EAX
+  memaddr.VarType = vtDouble
+  memaddr.appendToEntry(valuesMemaddr)
+  -- print("'Is in match' address found")
+  debug_removeBreakpoint(IsInMatchAddr)
+end)
 
 [DISABLE]
 -- print("Disabling breakpoints")

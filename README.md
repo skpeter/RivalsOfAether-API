@@ -101,7 +101,15 @@ movsd [eax],xmm0
 mov [esi+2C],00000009
 mov eax,[esi+3C]
 dec eax
-``` 
+```
+-  - Is in match (IsInMatch):
+```
+mov [eax],00000000
+mov eax,[esi+4C]
+mov [esi+0C],0000001C
+mov eax,[eax+0C]
+dec eax
+```
 - Keep the address scan running until you see it find one (possibly more) address. Then click Cancel to stop the search and double click on the first address that shows.
 - Right click the highlighted address on Memory View, go to "Copy to Clipboard", then "Addresses only".
 - Paste the address as the value of that specific variable on the script.
