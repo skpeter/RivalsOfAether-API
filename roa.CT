@@ -134,7 +134,7 @@ end
 -- Main loop
 local function onTimerTick()
   getValues()
-  if tostring(MemoryAddresses["IsInMatch"]) == "1" then
+  if tostring(MemoryAddresses["IsInMatch"]) == "1" and tostring(MemoryAddresses["IsWorkshopEnabled"]) == "1" then
     speedhack_setSpeed(GameSpeed)
   else
     speedhack_setSpeed(1)
