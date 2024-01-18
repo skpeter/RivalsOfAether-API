@@ -36,6 +36,7 @@ This is the data that will be exported through the URI-encoded form to the addre
 - P1Character, P1Character, P1Character, P1Character: Player character in IDs
 - P1Standing, P2Standing, P3Standing, P4Standing: Player standing, from 1 (1st) to 4 (4th), should be the same for doubles matches
 - IsWorkshopEnabled: Whether the workshop setting was enabled in the character select screen
+- IsInMatch: Is set to 1 if a match is currently playing, 0 if otherwise
 
 ### Character IDs
 - Random: 1
