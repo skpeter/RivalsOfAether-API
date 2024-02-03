@@ -1,5 +1,5 @@
 # The Unofficial Rivals of Aether API
-### Current Rivals of Aether Compatible Version: 2.1.7.2
+### Current Rivals of Aether Compatible Version: 2.1.7.3
 This is a CheatEngine table attached to a series of Lua scripts that can be used to export data related to the game.
 Common uses could be statistic projects and scrapers to update data on a tournament scoreboard.
 
@@ -74,7 +74,7 @@ Every time Rivals of Aether gets an update, this API will break and the addresse
 - - KO Counter (KOAddr):
 ```
 mov [eax],00000000
-mov [esi+24],0000011C  
+mov [esi+24],0000011C
 test [esi+44],00FFFFFF
 ```
 -  - Percentage (PercentageAddr):
@@ -96,19 +96,19 @@ mov [eax],00000000
 test [esi+1C],00FFFFFF
 mov [esi+2C],0000002B
 ```
--  - Workshop setting enabled (WorkshopAddr):
-```
-movsd [eax],xmm0
-mov [esi+2C],00000009
-mov eax,[esi+3C]
-dec eax
-```
--  - Is in match (IsInMatch):
+-  - Is in match (IsInMatchAddr):
 ```
 mov [eax],00000000
 mov eax,[esi+4C]
 mov [esi+0C],0000001C
 mov eax,[eax+0C]
+dec eax
+```
+-  - Workshop setting enabled (WorkshopAddr):
+```
+movsd [eax],xmm0
+mov [esi+2C],00000009
+mov eax,[esi+3C]
 dec eax
 ```
 - Keep the address scan running until you see it find one (possibly more) address. Then click Cancel to stop the search and double click on the first address that shows.

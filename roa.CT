@@ -222,12 +222,12 @@ local function hasValue (table, val)
   return false
 end
 
-KOAddr = "RivalsofAether.exe+3C4D19F"
-PercentageAddr = "RivalsofAether.exe+3D512F3"
-StandingsAddr = "RivalsofAether.exe+3C4CFA9"
-CharactersAddr = "RivalsofAether.exe+3D5C8B1"
-IsInMatchAddr = "RivalsofAether.exe+2C440C6"
-WorkshopAddr = "RivalsofAether.exe+3D5B4EC"
+KOAddr = "RivalsofAether.exe+3C5653F"
+PercentageAddr = "RivalsofAether.exe+3D5A6C3"
+StandingsAddr = "RivalsofAether.exe+3C56349"
+CharactersAddr = "RivalsofAether.exe+3D65C71"
+IsInMatchAddr = "RivalsofAether.exe+2C48866"
+WorkshopAddr = "RivalsofAether.exe+3D648AC"
 
 [ENABLE]
 
