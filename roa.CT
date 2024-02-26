@@ -9,8 +9,8 @@
 -- Edit these variables to your liking
 URL = "http://localhost/results" -- URL where the data gets sent to
 AccessToken = "xxxx"
-local poll_rate = 1000 -- How much time in miliseconds will this script poll for changes
-DiffHandler = {'standing', 'character'} -- Set to "standing" to only send data to server when standings are set, "character" for when characters change, etc. Leave as a blank table "{}" to catch any change.
+local poll_rate = 500 -- How much time in miliseconds will this script poll for changes
+DiffHandler = {} -- Set to "standing" to only send data to server when standings are set, "character" for when characters change, etc. Leave as a blank table "{}" to catch any change.
 
 GameSpeed = 1.25 -- Set this to another value you'd like to have during matches. This is for AetherBet, use at your own risk!
 
@@ -58,6 +58,8 @@ PreviousAddresses = {
   IsWorkshopEnabled = nil,
   IsInMatch = nil
 }
+
+Internet = getInternet()
 
 -- Force lua engine to not show when there are errors
 getLuaEngine().cbShowOnPrint.Checked=false
@@ -112,9 +114,8 @@ end
 -- Function to send data to your HTTP server
 local sendToServer = function(data)
   data = urlencodeTable(data)
-  local internet = getInternet()
-  local result = internet.postURL(URL, data)
   PreviousAddresses = copyTable(MemoryAddresses)
+  local result = Internet.postURL(URL, data)
 end
 
 -- Gets the values from CheatEngine
