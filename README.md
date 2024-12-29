@@ -1,5 +1,5 @@
 # The Unofficial Rivals of Aether API
-### Current Rivals of Aether Compatible Version: 2.1.7.3
+### Current Rivals of Aether Compatible Version: 2.1.8.1
 This is a CheatEngine table attached to a series of Lua scripts that can be used to export data related to the game.
 Common uses could be statistic projects and scrapers to update data on a tournament scoreboard.
 
@@ -24,9 +24,9 @@ First the cheat table must be able to find the addresses related to the game dat
 - Launch the CheatEngine client and open the script roa.CT (Ctrl+O)
 - Attach the Rivals of Aether game to the CheatEngine client
 - Click on the "Active" box on the "Poll for Memory Addresses" script.
-- Start a match. This can be a FFA or Doubles match with CPUs. Make sure it's a 4-player match so data for all ports can be collected.
+- Start a match with random characters. This can be a FFA or Doubles match with CPUs. Make sure it's a 4-player match so data for all ports can be collected.
 - Wait for the match to finish. Once the match ends the script will automatically finish polling.
-- Click on the "Active" box on the "Observe Changes & Send to Server" script. You should be good to go here.
+- Click on the "Active" box on the "Poll Changes & Send to Server" script. You should be good to go here.
 If you close out of CheatEngine or Rivals of Aether, you must do all of the above steps again.
 
 ## Data Export Structure
@@ -36,7 +36,7 @@ This is the data that will be exported through the URI-encoded form to the addre
 - P1Character, P1Character, P1Character, P1Character: Player character in IDs
 - P1Standing, P2Standing, P3Standing, P4Standing: Player standing, from 1 (1st) to 4 (4th), should be the same for doubles matches
 - IsWorkshopEnabled: Whether the workshop setting was enabled in the character select screen
-- IsInMatch: Is set to 1 if a match is currently playing, 0 if otherwise
+- IsInMatch: Is set to 1 if a match is currently playing, 0 if otherwise (currently unreliable)
 
 ### Character IDs
 - Random: 1

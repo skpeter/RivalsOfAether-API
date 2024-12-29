@@ -12,7 +12,7 @@ AccessToken = "xxxx"
 local poll_rate = 500 -- How much time in miliseconds will this script poll for changes
 DiffHandler = {} -- Set to "standing" to only send data to server when standings are set, "character" for when characters change, etc. Leave as a blank table "{}" to catch any change.
 
-GameSpeed = 1.25 -- Set this to another value you'd like to have during matches. This is for AetherBet, use at your own risk!
+GameSpeed = 1 -- Set this to another value you'd like to have during matches. This is for AetherBet, use at your own risk!
 
 -- Rivals of Aether memory addresses
 MemoryAddresses = {
@@ -223,12 +223,12 @@ local function hasValue (table, val)
   return false
 end
 
-KOAddr = "RivalsofAether.exe+3C5653F"
-PercentageAddr = "RivalsofAether.exe+3D5A6C3"
-StandingsAddr = "RivalsofAether.exe+3C56349"
-CharactersAddr = "RivalsofAether.exe+3D65C71"
-IsInMatchAddr = "RivalsofAether.exe+2C48866"
-WorkshopAddr = "RivalsofAether.exe+3D648AC"
+KOAddr = "RivalsofAether.exe+3C7247F"
+PercentageAddr = "RivalsofAether.exe+3D76DE3"
+StandingsAddr = "RivalsofAether.exe+3C72289"
+CharactersAddr = "RivalsofAether.exe+3D823A1"
+IsInMatchAddr = "RivalsofAether.exe+2C528B6"
+WorkshopAddr = "RivalsofAether.exe+3D80FDC"
 
 [ENABLE]
 
