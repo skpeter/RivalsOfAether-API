@@ -134,10 +134,12 @@ end
 -- Main loop
 local function onTimerTick()
   getValues()
-  if tostring(MemoryAddresses["IsInMatch"]) == "1" and tostring(MemoryAddresses["IsWorkshopEnabled"]) == "1" then
-    speedhack_setSpeed(GameSpeed)
-  else
-    speedhack_setSpeed(1)
+  if GameSpeed > 1 then
+    if tostring(MemoryAddresses["IsInMatch"]) == "1" and tostring(MemoryAddresses["IsWorkshopEnabled"]) == "1" then
+      speedhack_setSpeed(GameSpeed)
+    else
+      speedhack_setSpeed(1)
+    end
   end
   if has_value(DiffHandler, "standing") then
     if (MemoryAddresses["P1Standing"] ~= PreviousAddresses["P1Standing"] or MemoryAddresses["P2Standing"] ~= PreviousAddresses["P2Standing"] or MemoryAddresses["P3Standing"] ~= PreviousAddresses["P3Standing"] or MemoryAddresses["P4Standing"] ~= PreviousAddresses["P4Standing"]) then
