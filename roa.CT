@@ -9,7 +9,7 @@
 -- Edit these variables to your liking
 URL = "http://localhost/results" -- URL where the data gets sent to
 AccessToken = "xxxx"
-local poll_rate = 500 -- How much time in miliseconds will this script poll for changes
+local poll_rate = 250 -- How much time in miliseconds will this script poll for changes
 DiffHandler = {} -- Set to "standing" to only send data to server when standings are set, "character" for when characters change, etc. Leave as a blank table "{}" to disable this and just push data on every poll.
 GameSpeed = 1 -- Set this to another value you'd like to have during matches. This is for AetherBet, use at your own risk!
 
@@ -160,14 +160,14 @@ local function onTimerTick()
     end
   end
   if next(DiffHandler) == nil then -- this means table is empty
-    sendToServer(MemoryAddresses)
+    -- sendToServer(MemoryAddresses)
     -- old logic below
-    -- for index, value in pairs(MemoryAddresses) do
-    --   if value ~= PreviousAddresses[index] then
-    --   sendToServer(MemoryAddresses)
-    --     return nil
-    --   end
-    -- end
+    for index, value in pairs(MemoryAddresses) do
+      if value ~= PreviousAddresses[index] then
+      sendToServer(MemoryAddresses)
+        return nil
+      end
+    end
   end
 end
 
